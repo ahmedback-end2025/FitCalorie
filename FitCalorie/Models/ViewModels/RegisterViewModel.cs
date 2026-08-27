@@ -26,9 +26,12 @@ namespace FitCalorie.Models.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-       
+        public string FitnessGoal { get; set; }
+        public string Gender { get; set; }
 
-        
+
+
+
 
 
         [Required(ErrorMessage = "Age is required")]

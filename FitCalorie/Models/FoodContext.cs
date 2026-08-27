@@ -11,20 +11,20 @@ namespace FitCalorie.Models
 
         }
         public DbSet<FoodItem> FoodItems { get; set; }
-        public DbSet<DialyLog> DailyLogs { get; set; }
+        public DbSet<DailyLog> DailyLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             // 1. Relationships & Foreign Keys
-            modelBuilder.Entity<DialyLog>()
+            modelBuilder.Entity<DailyLog>()
                 .HasOne(d => d.user)
                 .WithMany()
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<DialyLog>()
+            modelBuilder.Entity<DailyLog>()
                 .HasOne(d => d.food)
                 .WithMany()
                 .HasForeignKey(d => d.FoodId)

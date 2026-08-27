@@ -1,0 +1,62 @@
+﻿@model FitCalorie.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<div class="container mt-5 mb-5" style="max-width: 500px;">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <!-- Header -->
+        <div class="card-header py-3 text-white text-center" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+            <h4 class="mb-0 fw-bold">Sign In to FitCalorie</h4>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+
+            <!-- Validation Errors Summary -->
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger shadow-sm" role="alert"></div>
+
+            <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold text-secondary">Email Address</label>
+                    <input asp-for="Email" type="email" class="form-control form-control-lg" placeholder="name@example.com" autofocus />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label fw-semibold text-secondary">Password</label>
+                    <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="••••••••" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <div class="form-check mb-4">
+                    <input asp-for="RememberMe" class="form-check-input" type="checkbox" id="rememberMeCheck" />
+                    <label class="form-check-label text-secondary fw-semibold" for="rememberMeCheck">
+                        Remember Me
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-bold rounded-3 shadow-sm" style="background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%); border: none;">
+                    Sign In
+                </button>
+
+                <!-- Register Link -->
+                <div class="text-center mt-4">
+                    <span class="text-muted">Don't have an account?</span>
+                    <a asp-action="Register" asp-controller="Account" class="fw-bold text-decoration-none" style="color: #2575fc;">Register Now</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

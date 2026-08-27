@@ -26,7 +26,10 @@ namespace FitCalorie
             ).AddEntityFrameworkStores<FoodContext>();
 
 
-
+            builder.Services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "RequestVerificationToken";
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

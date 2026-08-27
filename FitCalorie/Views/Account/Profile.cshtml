@@ -1,0 +1,64 @@
+﻿@model FitCalorie.Models.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Set Up Profile";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg" style="max-width: 450px; width: 100%; border-radius: 12px; border: none; overflow: hidden;">
+
+        <!-- Header بنفس اللون الأزرق الغامق -->
+        <div class="card-header text-center text-white py-4" style="background-color: #2b5797; border: none;">
+            <h4 class="mb-1 fw-bold">Set Up Your Profile</h4>
+            <small class="text-white-50">Enter your metrics to calculate daily target macros</small>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body p-4 bg-white">
+            <form asp-action="Profile" method="post">
+
+                <!-- Weight Input -->
+                <div class="mb-3">
+                    <label asp-for="Weight" class="form-label text-muted fw-semibold">Weight (kg)</label>
+                    <div class="input-group">
+                        <input asp-for="Weight" class="form-control shadow-none" type="number" step="0.1" style="border-radius: 6px 0 0 6px;" />
+                        <span class="input-group-text bg-light text-muted" style="border-radius: 0 6px 6px 0;">kg</span>
+                    </div>
+                    <span asp-validation-for="Weight" class="text-danger small"></span>
+                </div>
+
+                <!-- Height Input -->
+                <div class="mb-3">
+                    <label asp-for="Height" class="form-label text-muted fw-semibold">Height (cm)</label>
+                    <div class="input-group">
+                        <input asp-for="Height" class="form-control shadow-none" type="number" step="0.1" style="border-radius: 6px 0 0 6px;" />
+                        <span class="input-group-text bg-light text-muted" style="border-radius: 0 6px 6px 0;">cm</span>
+                    </div>
+                    <span asp-validation-for="Height" class="text-danger small"></span>
+                </div>
+
+                <!-- Fitness Goal Dropdown (تضخيم / تنشيف) -->
+                <div class="mb-4">
+                    <label asp-for="FitnessGoal" class="form-label text-muted fw-semibold">Fitness Goal</label>
+                    <select asp-for="FitnessGoal" class="form-select shadow-none" style="border-radius: 6px;">
+                        <option value="Cutting">Cutting (تنشيف)</option>
+                        <option value="Bulking">Bulking (تضخيم)</option>
+                    </select>
+                    <span asp-validation-for="FitnessGoal" class="text-danger small"></span>
+                </div>
+
+                <!-- Submit Button بنفس الـ Gradient اللي في زرار الـ Sign In -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn text-white fw-bold py-2 shadow-sm" style="background: linear-gradient(135deg, #2b5797 0%, #7b2cbf 100%); border: none; border-radius: 6px; font-size: 1.1rem;">
+                        Calculate & Save Targets
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitCalorie.Models.ViewModels
 {
-    public class DialyLogsViewModel
+    public class DailyLogsViewModel
     {
         
         public int Id { get; set; }

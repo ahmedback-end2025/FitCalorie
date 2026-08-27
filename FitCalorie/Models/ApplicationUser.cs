@@ -16,6 +16,8 @@ namespace FitCalorie.Models
 
         public int Age { get; set; }
 
+        public string FitnessGoal { get; set; }
+       
 
         public double TotalCalorie { get; set; }
         public double TotalCarb { get; set; }

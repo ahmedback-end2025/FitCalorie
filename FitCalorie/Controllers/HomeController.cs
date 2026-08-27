@@ -15,8 +15,15 @@ namespace FitCalorie.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "DailyLogs");
+            }
+
+            return RedirectToAction("Login", "Account");
         }
+
+
 
         public IActionResult Privacy()
         {

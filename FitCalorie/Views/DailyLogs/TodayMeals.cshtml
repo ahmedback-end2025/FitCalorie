@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FitCalorie.Models.DailyLog>
+
+@{
+    ViewData["Title"] = "Today's Meals";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-dark">Today's Meals</h2>
+            <p class="text-muted small mb-0">@DateTime.Today.ToString("dddd, MMMM dd, yyyy")</p>
+        </div>
+        <a asp-action="LogMeal" class="btn text-white px-4 py-2 rounded-3 shadow-sm fw-semibold" style="background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);">
+            + Log Meal
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center py-5 rounded-4 shadow-sm border-0">
+            <h5 class="fw-bold mb-2">No meals logged for today yet.</h5>
+            <p class="text-muted mb-3">Start tracking your nutrition to reach your fitness goals!</p>
+            <a asp-action="LogMeal" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">Add Your First Meal</a>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="py-3 ps-4">Food Item</th>
+                            <th class="py-3">Quantity</th>
+                            <th class="py-3">Calories</th>
+                            <th class="py-3">Protein</th>
+                            <th class="py-3">Carbs</th>
+                            <th class="py-3">Fats</th>
+                            <th class="py-3 text-end pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold ps-4">@item.food?.Name</td>
+                                <td>@item.AmountGrames g</td>
+                                <td><span class="badge bg-primary-subtle text-primary fw-bold">@item.TotalCalorie.ToString("F0") kcal</span></td>
+                                <td>@item.TotalProtein.ToString("F1") g</td>
+                                <td>@item.TotalCarb.ToString("F1") g</td>
+                                <td>@item.TotalFat.ToString("F1") g</td>
+                                <td class="text-end pe-4">
+                                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to remove this item?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger px-3 rounded-2">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-group-divider fw-bold">
+                        <tr class="table-secondary">
+                            <td class="ps-4">Total</td>
+                            <td>@Model.Sum(x => x.AmountGrames) g</td>
+                            <td><span class="text-primary">@Model.Sum(x => x.TotalCalorie).ToString("F0") kcal</span></td>
+                            <td>@Model.Sum(x => x.TotalProtein).ToString("F1") g</td>
+                            <td>@Model.Sum(x => x.TotalCarb).ToString("F1") g</td>
+                            <td>@Model.Sum(x => x.TotalFat).ToString("F1") g</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    }
+</div>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitCalorie.Models
 {
-    public class DialyLog
+    public class DailyLog
     {
         [Key]
         public int Id { get; set; }
@@ -21,6 +21,8 @@ namespace FitCalorie.Models
         public virtual FoodItem food {get;set;}
 
         public double AmountGrames { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
         [NotMapped]
