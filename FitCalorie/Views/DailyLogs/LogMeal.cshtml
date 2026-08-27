@@ -64,7 +64,7 @@
             btnText.innerText = "Saving...";
 
             try {
-                const response = await fetch(window.location.href, {
+                const response = await fetch('/DailyLogs/SaveLog', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

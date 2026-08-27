@@ -39,7 +39,7 @@ namespace FitCalorie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveLog(DialyLogsViewModel dialy)
+        public async Task<IActionResult> SaveLog([FromBody] DialyLogsViewModel dialy)
         {
             if (!ModelState.IsValid || dialy == null)
             {

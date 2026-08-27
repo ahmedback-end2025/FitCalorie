@@ -10,18 +10,17 @@ namespace FitCalorie.Models.ViewModels
         
         public int Id { get; set; }
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
        
-        public virtual ApplicationUser user { get; set; }
+       
 
         public int FoodId { get; set; }
         
-        public virtual FoodItem food { get; set; }
-
+        
         public double AmountGrames { get; set; }
 
 
-        public IEnumerable<SelectListItem> SelectedList { get; set; } =Enumerable.Empty< SelectListItem>();
+        public IEnumerable<SelectListItem>? SelectedList { get; set; } =Enumerable.Empty< SelectListItem>();
 
     }
 }
