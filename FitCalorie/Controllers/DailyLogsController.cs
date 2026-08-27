@@ -66,14 +66,13 @@ namespace FitCalorie.Controllers
 
             var currentUser = await userManager.FindByIdAsync(userId);
 
-            // 1. استخراج بيانات المستخدم
             double weight = currentUser?.Weight > 0 ? currentUser.Weight : 70;
             double height = currentUser?.Height > 0 ? currentUser.Height : 170;
             int age = currentUser?.Age > 0 ? currentUser.Age : 25;
             string gender = currentUser?.Gender ?? "Male";
             string goal = currentUser?.FitnessGoal ?? "Cutting";
 
-            // 2. حساب معدل الحرق الأساسي BMR (معادلة Mifflin-St Jeor العالمية)
+         
             double bmr = (10 * weight) + (6.25 * height) - (5 * age);
             if (gender == "Male")
             {
@@ -84,10 +83,10 @@ namespace FitCalorie.Controllers
                 bmr -= 161;
             }
 
-            // 3. ضرب الناتج في معامل النشاط اليومي (باعتبار متوسط النشاط 1.375)
+            
             double tdee = bmr * 1.375;
 
-            // 4. تعديل السعرات بناءً على الهدف (تضخيم أو تنشيف)
+            
             double targetCalories = tdee;
             if (goal == "Bulking")
             {
@@ -98,9 +97,9 @@ namespace FitCalorie.Controllers
                 targetCalories -= 500; // عجز للتنشيف
             }
 
-            // 5. حساب الماكروز (البروتين والدهون والكارب)
-            double targetProtein = weight * 2.2; // 2.2 جرام لكل كيلو بروتين
-            double targetFats = (targetCalories * 0.25) / 9; // 25% من السعرات دهون
+            
+            double targetProtein = weight * 2.2; 
+            double targetFats = (targetCalories * 0.25) / 9; 
             double caloriesFromProAndFat = (targetProtein * 4) + (targetFats * 9);
             double targetCarbs = Math.Max(0, (targetCalories - caloriesFromProAndFat) / 4);
 
@@ -111,13 +110,12 @@ namespace FitCalorie.Controllers
 
             var model = new DashboardViewModel();
 
-            // ربط النتائج الحقيقية بالـ ViewModel عشان تعرضها في الصفحة
             model.TargetCalories = Math.Round(targetCalories, 1);
             model.TargetProtein = Math.Round(targetProtein, 1);
             model.TargetCarbs = Math.Round(targetCarbs, 1);
             model.TargetFats = Math.Round(targetFats, 1);
 
-            // باقي الكود الخاص بجمع الأكل اللي المستخدم أكله النهارده...
+            
             foreach (var item in logs)
             {
                 if (item.food != null)
