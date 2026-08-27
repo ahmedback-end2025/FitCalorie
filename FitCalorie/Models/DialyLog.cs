@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.SignalR;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitCalorie.Models
 {
-    public class DailyLog
+    public class DialyLog
     {
-        public int UserId { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         [ValidateNever]
         public virtual ApplicationUser user { get; set; }

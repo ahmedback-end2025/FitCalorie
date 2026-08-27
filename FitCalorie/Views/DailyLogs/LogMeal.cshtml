@@ -1,0 +1,107 @@
+﻿@model FitCalorie.Models.ViewModels.DialyLogsViewModel
+
+@{
+    ViewData["Title"] = "Log Meal";
+}
+
+<div class="container mt-5" style="max-width: 650px;">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <!-- Header with a modern gradient -->
+        <div class="card-header py-3 text-white text-center" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+            <h4 class="mb-0 fw-bold tracking-wide">Log a Meal</h4>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+
+            <!-- AJAX Alert Box -->
+            <div id="statusAlert" class="alert d-none shadow-sm" role="alert"></div>
+
+            <form id="logMealForm" method="post" asp-action="SaveLog">
+                @Html.AntiForgeryToken()
+
+                <!-- Food Selection Dropdown -->
+                <div class="mb-4">
+                    <label asp-for="FoodId" class="form-label fw-semibold text-secondary">Food Item</label>
+                    <select id="foodSelect" asp-for="FoodId" asp-items="Model.SelectedList" class="form-select form-select-lg" required>
+                        <option value="">-- Select Food --</option>
+                    </select>
+                </div>
+
+                <!-- Weight Input -->
+                <div class="mb-4">
+                    <label asp-for="AmountGrames" class="form-label fw-semibold text-secondary">Amount (grams)</label>
+                    <input type="number" id="amountGrames" asp-for="AmountGrames" class="form-control form-control-lg" placeholder="e.g. 150" min="1" required />
+                </div>
+
+                <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg w-100 py-3 fw-bold rounded-3 shadow-sm" style="background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%); border: none;">
+                    <span id="btnText">Save Meal</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('logMealForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const foodId = document.getElementById('foodSelect').value;
+            const amount = document.getElementById('amountGrames').value;
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            const alertBox = document.getElementById('statusAlert');
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
+
+            if (!foodId || !amount) {
+                alertBox.className = "alert alert-warning";
+                alertBox.innerText = "Please select a food item and specify the amount.";
+                alertBox.classList.remove('d-none');
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnText.innerText = "Saving...";
+
+            try {
+                const response = await fetch(window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    },
+                    body: JSON.stringify({
+                        FoodId: parseInt(foodId),
+                        AmountGrames: parseFloat(amount)
+                    })
+                });
+
+                    if (response.ok) {
+            const result = await response.json();
+
+            if (result.success) {
+                alertBox.className = "alert alert-success";
+                alertBox.innerText = result.message;
+                alertBox.classList.remove('d-none');
+
+                // التوجيه لصفحة وجبات اليوم بعد ثانية واحدة ليتمكن من رؤية رسالة النجاح
+                setTimeout(function() {
+                    window.location.href = result.redirectUrl;
+                }, 1000);
+            } else {
+                alertBox.className = "alert alert-danger";
+                alertBox.innerText = result.message;
+                alertBox.classList.remove('d-none');
+            }
+        }
+            } catch (err) {
+                alertBox.className = "alert alert-danger";
+                alertBox.innerText = "Server connection error.";
+                alertBox.classList.remove('d-none');
+            } finally {
+                btnSubmit.disabled = false;
+                btnText.innerText = "Save Meal";
+            }
+        });
+    </script>
+}

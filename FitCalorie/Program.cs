@@ -1,3 +1,6 @@
+using FitCalorie.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace FitCalorie
 {
     public class Program
@@ -5,6 +8,25 @@ namespace FitCalorie
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+
+            builder.Services.AddDbContext<FoodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            }
+
+
+            ).AddEntityFrameworkStores<FoodContext>();
+
+
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
