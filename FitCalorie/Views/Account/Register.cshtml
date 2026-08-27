@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <!-- Metrics Row (Age, Height, Weight) مقسومة بثلاث أعمدة متساوية بشكل شيك -->
+                <!-- Metrics Row (Age, Height, Weight) -->
                 <div class="row">
                     <div class="col-4 mb-3">
                         <label asp-for="Age" class="form-label fw-semibold text-secondary">Age</label>
@@ -73,8 +73,8 @@
                         <label asp-for="Gender" class="form-label fw-semibold text-secondary">Gender</label>
                         <select asp-for="Gender" class="form-select form-select-lg shadow-none" style="border-radius: 8px;">
                             <option value="">-- Select Gender --</option>
-                            <option value="Male">Male (ذكر)</option>
-                            <option value="Female">Female (أنثى)</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                         <span asp-validation-for="Gender" class="text-danger small"></span>
                     </div>
@@ -82,8 +82,8 @@
                         <label asp-for="FitnessGoal" class="form-label fw-semibold text-secondary">Fitness Goal</label>
                         <select asp-for="FitnessGoal" class="form-select form-select-lg shadow-none" style="border-radius: 8px;">
                             <option value="">-- Select Goal --</option>
-                            <option value="Cutting">Cutting (تنشيف)</option>
-                            <option value="Bulking">Bulking (تضخيم)</option>
+                            <option value="Cutting">Cutting</option>
+                            <option value="Bulking">Bulking</option>
                         </select>
                         <span asp-validation-for="FitnessGoal" class="text-danger small"></span>
                     </div>
